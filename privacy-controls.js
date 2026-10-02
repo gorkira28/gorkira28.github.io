@@ -18,8 +18,30 @@
   const actions = new Set(['publication_jia_mental_health','publication_jia_screening','publication_asthma_jia','project_atlas_repository','project_atlas_methodology','project_atlas_image','project_neha_award','linkedin_profile','contact_email','contact_gmail','contact_copy_email','contact_phone']);
   const sections = new Set(['home','work','research','perspective','experience','evidence','contact']);
   const page = location.pathname.endsWith('/privacy.html') ? 'privacy' : 'portfolio';
-  // Deliberately fixed: never read query strings, fragments, document titles, or referrers.
+  // Deliberately fixed: never send query strings, fragments, or document titles.
   const cleanLocation = 'https://gorkira28.github.io/' + (page === 'privacy' ? 'privacy.html' : '');
+  const referralOrigins = new Map([
+    ['linkedin.com', 'https://www.linkedin.com/'],
+    ['www.linkedin.com', 'https://www.linkedin.com/'],
+    ['m.linkedin.com', 'https://www.linkedin.com/'],
+    ['google.com', 'https://www.google.com/'],
+    ['www.google.com', 'https://www.google.com/'],
+    ['news.google.com', 'https://www.google.com/'],
+    ['bing.com', 'https://www.bing.com/'],
+    ['www.bing.com', 'https://www.bing.com/'],
+    ['github.com', 'https://github.com/'],
+    ['www.github.com', 'https://github.com/'],
+    ['substack.com', 'https://substack.com/'],
+    ['www.substack.com', 'https://substack.com/']
+  ]);
+  // Inspect the host locally; return only a constant origin from this exact list.
+  const safeReferrer = (() => {
+    try {
+      const referrer = new URL(document.referrer);
+      if (!['https:', 'http:'].includes(referrer.protocol) || referrer.username || referrer.password || referrer.port) return '';
+      return referralOrigins.get(referrer.hostname) || '';
+    } catch { return ''; }
+  })();
   const readSessionState = () => {
     try { return sessionStorage.getItem(sessionKey) === 'rejected' ? 'rejected' : 'none'; }
     catch { return 'unknown'; }
@@ -61,7 +83,7 @@
   const tag = function () { window.dataLayer.push(arguments); };
   function event(name, params) {
     if (!enabled || !id) return;
-    tag('event', name, {...params, send_to: id, page_location: cleanLocation, page_referrer: '', page_title: page === 'privacy' ? 'Privacy' : 'Kira Gor portfolio'});
+    tag('event', name, {...params, send_to: id, page_location: cleanLocation, page_referrer: safeReferrer, page_title: page === 'privacy' ? 'Privacy' : 'Kira Gor portfolio'});
   }
   function stopSections() {
     observer?.disconnect();
@@ -97,7 +119,7 @@
       tag('consent', 'default', {analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied'});
       tag('set', {allow_google_signals: false, allow_ad_personalization_signals: false, ads_data_redaction: true, url_passthrough: false});
       tag('js', new Date());
-      tag('config', id, {send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false, cookie_expires: 15552000, cookie_update: false, page_location: cleanLocation, page_referrer: '', page_title: page === 'privacy' ? 'Privacy' : 'Kira Gor portfolio', ignore_referrer: true});
+      tag('config', id, {send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false, cookie_expires: 15552000, cookie_update: false, page_location: cleanLocation, page_referrer: safeReferrer, page_title: page === 'privacy' ? 'Privacy' : 'Kira Gor portfolio'});
       const script = document.createElement('script');
       script.async = true;
       script.referrerPolicy = 'no-referrer';

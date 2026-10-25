@@ -15,7 +15,7 @@
   let observer;
   const timers = new Map();
   const seen = new Set();
-  const actions = new Set(['publication_jia_mental_health','publication_jia_screening','publication_asthma_jia','project_atlas_repository','project_atlas_methodology','project_atlas_image','project_neha_award','linkedin_profile','contact_email','contact_gmail','contact_copy_email','contact_phone']);
+  const actions = new Set(['publication_jia_mental_health','publication_jia_screening','publication_asthma_jia','project_atlas_repository','project_atlas_methodology','project_atlas_image','project_nursing_home_repository','project_neha_award','linkedin_profile','contact_email','contact_gmail','contact_copy_email','contact_phone']);
   const sections = new Set(['home','work','research','perspective','experience','evidence','contact']);
   const page = location.pathname.endsWith('/privacy.html') ? 'privacy' : 'portfolio';
   // Deliberately fixed: never send query strings, fragments, or document titles.

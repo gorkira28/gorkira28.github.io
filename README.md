@@ -6,6 +6,7 @@ This repository contains the professional portfolio of **Kira Gor, BDS, MPH**, a
 
 ## Featured analytics work
 
+- [RESP-NET Age-Specific Respiratory Hospitalization Burden](https://github.com/gorkira28/resp-net-age-hospitalization-burden) — SAS, Python, respiratory surveillance, age-pattern analysis, and QA/QC
 - [CMS Birthing-Friendly Designation Density](https://github.com/gorkira28/cms-birthing-friendly-access) — DuckDB SQL, Python, GeoPandas, QGIS-ready data, and maternal-health interpretation
 - [Pertussis Surveillance Priorities](https://github.com/gorkira28/pertussis-2025-surveillance-priorities) — DuckDB SQL, QGIS, surveillance epidemiology, and QA/QC
 - [Hidden Hypertension: NHANES Awareness-Gap Analysis](https://github.com/gorkira28/nhanes-hypertension-awareness-gap) — SAS, Python, complex-survey analysis, and sensitivity checks
